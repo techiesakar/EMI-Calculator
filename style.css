@@ -1,0 +1,30 @@
+.container-fluid {
+  width: 100%;
+}
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+form {
+  min-width: 350px;
+}
+input {
+  width: 48%;
+}
+
+body.dark {
+  background-color: red;
+}
