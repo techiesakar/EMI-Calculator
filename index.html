@@ -17,16 +17,43 @@
         font-family: "Poppins", sans-serif;
       }
     </style>
-    <script src="main.js" defer></script>
+    <script src="emi.js" defer></script>
     <title>EMI Calculator</title>
   </head>
   <body>
     <div class="container-fluid">
       <div class="wrapper mt-[100px] mx-auto max-w-screen-xl">
         <div class="w-full">
-          <h1 class="text-center text-3xl font-bold text-gray-800 mb-8">
+          <h1
+            id="tools-title"
+            class="text-center text-3xl font-bold text-gray-800 mb-8"
+          >
             EMI Calculator
           </h1>
+          <div class="tab-buttons">
+            <button
+              type="button"
+              onclick="openContent(event, 'emiContent')"
+              class="tablinks py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            >
+              EMI
+            </button>
+
+            <button
+              type="button"
+              onclick="openContent(event, 'interestContent')"
+              class="tablinks py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            >
+              Interest
+            </button>
+            <button
+              type="button"
+              onclick="openContent(event, 'compoundContent')"
+              class="tablinks py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            >
+              Compound
+            </button>
+          </div>
           <div
             class="emi-container gap-4 h-full flex justify-between flex-wrap"
           >
@@ -101,9 +128,10 @@
                 </div>
               </div>
             </form>
+            <!-- #form -->
             <div
-              id="output"
-              class="p-8 bg-white shadow-lg border w-full lg:w-[38%] leading-[50px]"
+              id="emiContent"
+              class="tabcontent p-8 bg-white shadow-lg border w-full lg:w-[38%] leading-[50px]"
             >
               <div class="border-b border-gray-200">
                 <div>Monthly EMI</div>
@@ -119,7 +147,7 @@
                 <div>
                   <span>Rs. </span>
                   <span
-                    id="principal-output"
+                    id="emi-principal-output"
                     class="font-bold text-blue-500"
                   ></span>
                 </div>
@@ -127,21 +155,98 @@
               <div class="flex justify-between border-b">
                 <div>Interest Payable:</div>
                 <div>
-                  <span>Rs. </span> <span id="total-interest-output"></span>
+                  <span>Rs. </span> <span id="emi-total-interest-output"></span>
                 </div>
               </div>
               <div class="flex justify-between">
                 <div class="font-bold">Total Payable:</div>
                 <div>
                   <span>Rs. </span>
-                  <span id="total-payable-output"></span>
+                  <span id="emi-total-payable-output"></span>
                 </div>
               </div>
             </div>
+            <!-- #EMIContent -->
+            <div
+              id="interestContent"
+              class="tabcontent hidden p-8 bg-white shadow-lg border w-full lg:w-[38%] leading-[50px]"
+            >
+              <div class="flex justify-between border-b">
+                <div>Principal:</div>
+                <div>
+                  <span>Rs. </span>
+                  <span
+                    id="si-principal-output"
+                    class="font-bold text-blue-500"
+                  ></span>
+                </div>
+              </div>
+              <div class="flex justify-between border-b">
+                <div>Interest Payable:</div>
+                <div>
+                  <span>Rs. </span> <span id="si-total-interest-output"></span>
+                </div>
+              </div>
+              <div class="flex justify-between">
+                <div class="font-bold">Total Payable:</div>
+                <div>
+                  <span>Rs. </span>
+                  <span id="si-total-payable-output"></span>
+                </div>
+              </div>
+            </div>
+            <!-- #interestContent -->
+            <div
+              id="compoundContent"
+              class="tabcontent hidden p-8 bg-white shadow-lg border w-full lg:w-[38%] leading-[50px]"
+            >
+              <div class="flex justify-between border-b items-center">
+                <div>Compound Time:</div>
+
+                <select
+                  id="com-time"
+                  class="h-[40px] form-select appearance-none block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  aria-label="Default select example"
+                >
+                  <option selected value="1">Yearly</option>
+                  <option value="2">Semi Annualy</option>
+                  <option value="4">Quaterly</option>
+                  <option value="12">Monthly</option>
+                </select>
+              </div>
+
+              <div class="flex justify-between border-b">
+                <div>Principal:</div>
+                <div>
+                  <span>Rs. </span>
+                  <span
+                    id="com-principal-output"
+                    class="font-bold text-blue-500"
+                  ></span>
+                </div>
+              </div>
+              <div class="flex justify-between border-b">
+                <div>Interest Payable:</div>
+                <div>
+                  <span>Rs. </span> <span id="com-total-interest-output"></span>
+                </div>
+              </div>
+              <div class="flex justify-between">
+                <div class="font-bold">Total Payable:</div>
+                <div>
+                  <span>Rs. </span>
+                  <span id="com-total-payable-output"></span>
+                </div>
+              </div>
+            </div>
+            <!-- #compoundContent -->
           </div>
         </div>
       </div>
-      <div class="wrapper mx-auto max-w-screen-xl mt-14">
+      <div
+        id="tableWrapper"
+        class="table-wrapper mx-auto max-w-screen-xl mt-14"
+      >
         <div
           class="relative overflow-y-auto w-full shadow-md sm:rounded-lg overflow-y-auto h-96"
         >
@@ -164,6 +269,22 @@
           </table>
         </div>
       </div>
+      <!-- .table-wrapper -->
     </div>
   </body>
+  <script>
+    function openContent(evt, cityName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+  </script>
 </html>

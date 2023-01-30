@@ -5,24 +5,55 @@ let emptyStatement = {};
 const principalAmtSlider = document.getElementById("loanAmtSlider");
 const interestRateSlider = document.getElementById("interestRateSlider");
 const loanTermSlider = document.getElementById("loanTermSlider");
+const toolsTitle = document.getElementById("tools-title");
 
 const principalAmtInput = document.getElementById("loan-input");
 const rateInput = document.getElementById("rate-input");
 const termInput = document.getElementById("term-input");
 
-// for output
-const principalOutput = document.getElementById("principal-output");
-const interestPayableOutput = document.getElementById("total-interest-output");
+// for EMI output
+const emiPrincipalOutput = document.getElementById("emi-principal-output");
+const emiInterestPayableOutput = document.getElementById(
+  "emi-total-interest-output"
+);
 const monthlyEMI = document.getElementById("monthlyEMI");
-const totalPayableOutput = document.getElementById("total-payable-output");
+const emiTotalPayableOutput = document.getElementById(
+  "emi-total-payable-output"
+);
+
+// for Interest Output
+
+const siPrincipalOutput = document.getElementById("si-principal-output");
+const siInterestPayableOutput = document.getElementById(
+  "si-total-interest-output"
+);
+const siTotalPayableOutput = document.getElementById("si-total-payable-output");
+
+// Compound Output
+const comPrincipalOutput = document.getElementById("com-principal-output");
+const comInterestPayableOutput = document.getElementById(
+  "com-total-interest-output"
+);
+const comTotalPayableOutput = document.getElementById(
+  "com-total-payable-output"
+);
+
+const comTime = document.getElementById("com-time");
 
 const tableBody = document.getElementById("table-body");
+
+// variable definition for interest
+const siTab = document.getElementById("si-tab");
+const emiTab = document.getElementById("emi-tab");
+const compoundTab = document.getElementById("compound-tab");
 
 // Default values
 let principalvalue = 4000000;
 let rateValue = 16.68;
 let termValue = 2;
 let balance = principalvalue;
+let comTimeValue = comTime.value;
+console.log(comTime);
 principalAmtSlider.value = principalvalue;
 interestRateSlider.value = rateValue;
 loanTermSlider.value = termValue;
@@ -65,12 +96,33 @@ const calculateEMI = () => {
   totalPayable = interestPayable + principalvalue;
   balance = principalvalue;
 
-  // Updating text content
+  // Updating text content for EMI
 
-  principalOutput.textContent = principalvalue.toLocaleString("en-US");
+  emiPrincipalOutput.textContent = principalvalue.toLocaleString("en-US");
   monthlyEMI.textContent = EMI.toLocaleString("en-US");
-  interestPayableOutput.textContent = interestPayable.toLocaleString("en-US");
-  totalPayableOutput.textContent = totalPayable.toLocaleString();
+  emiInterestPayableOutput.textContent =
+    interestPayable.toLocaleString("en-US");
+  emiTotalPayableOutput.textContent = totalPayable.toLocaleString();
+
+  // Updating text content for Interest
+  siPrincipalOutput.textContent = principalvalue.toLocaleString("en-US");
+  let siIntPayable = 12 * interest * termValue;
+  siInterestPayableOutput.textContent = siIntPayable.toLocaleString("en-US");
+  siTotalPayableOutput.textContent = principalvalue + 12 * interest * termValue;
+
+  // Updating text content for Compound Interest
+  comPrincipalOutput.textContent = principalvalue.toLocaleString("en-US");
+
+  let comTotalValue =
+    principalvalue *
+    (1 + (rateValue * 0.01) / comTimeValue) ** (comTimeValue * termValue);
+
+  comTotalPayableOutput.textContent = comTotalValue.toLocaleString();
+  console.log(`This is ${comTimeValue}`);
+
+  comInterestPayableOutput.textContent = (
+    comTotalValue - principalvalue
+  ).toLocaleString();
 
   // Loop for each months
   // console.clear();
@@ -91,10 +143,10 @@ const calculateEMI = () => {
       Balance: principalvalue,
     };
     // Adding value to objects
-    statement[`${i}`].Installment = EMI.toFixed(3);
-    statement[`${i}`].Interest = interestPaidThisMonth.toFixed(3);
-    statement[`${i}`].Principal = principalPaidThisMonth.toFixed(3);
-    statement[`${i}`].Balance = i == termToMonth ? 0 : balance.toFixed(3);
+    statement[`${i}`].Installment = EMI.toFixed(2);
+    statement[`${i}`].Interest = interestPaidThisMonth.toFixed(2);
+    statement[`${i}`].Principal = principalPaidThisMonth.toFixed(2);
+    statement[`${i}`].Balance = i == termToMonth ? 0 : balance.toFixed(2);
 
     // Table Loop Ends
 
@@ -191,4 +243,45 @@ loanTermSlider.addEventListener("input", (e) => {
   calculateEMI();
 });
 
-// Creating Table
+comTime.addEventListener("change", (e) => {
+  comTimeValue = Number(e.target.value);
+  comTimeValue *= termValue;
+  console.log(`New con time = ${comTimeValue}`);
+  calculateEMI();
+});
+
+// *************************************** For Tab Click
+
+// siTab, emiTab, compoundTab
+const tableWrapper = document.getElementById("tableWrapper");
+let tabcontent;
+let tablinks;
+tablinks = document.getElementsByClassName("tablinks");
+
+var openOutput = (evt, result) => {
+  let i;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace("active", "");
+  }
+  document.getElementById(result).style.display = "block";
+  evt.currentTarget.className += "active";
+};
+
+for (let i = 0; i < tablinks.length; i++) {
+  tablinks[i].addEventListener("click", () => {
+    if (i == 0) {
+      tableWrapper.classList.remove("hidden");
+      toolsTitle.textContent = "EMI Calculator";
+    } else if (i == 1) {
+      tableWrapper.classList.add("hidden");
+      toolsTitle.textContent = "Simple Interest Calculator";
+    } else {
+      tableWrapper.classList.add("hidden");
+      toolsTitle.textContent = "Compound Interest Calculator";
+    }
+  });
+}
