@@ -243,19 +243,12 @@ loanTermSlider.addEventListener("input", (e) => {
   calculateEMI();
 });
 
-comTime.addEventListener("click", (e) => {
+comTime.addEventListener("change", (e) => {
   comTimeValue = Number(e.target.value);
   comTimeValue *= termValue;
   console.log(`New con time = ${comTimeValue}`);
-  // calculateEMI();
+  calculateEMI();
 });
-
-for (let i = 0; i < 3; i++) {
-  comTime[i].addEventListener("click", (e) => {
-    comTime.value = Number(e.target.value);
-    calculateEMI();
-  });
-}
 
 // *************************************** For Tab Click
 
