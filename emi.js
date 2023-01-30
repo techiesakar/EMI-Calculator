@@ -80,7 +80,7 @@ const calculateEMI = () => {
 
   tableBody.innerHTML = "";
   statement = emptyStatement;
-
+  console.log(`The value is printed in the function ${comTimeValue}`);
   rateToMonth = rateValue / 1200;
   termToMonth = termValue * 12;
   interest = principalvalue * rateToMonth;
@@ -117,12 +117,16 @@ const calculateEMI = () => {
     principalvalue *
     (1 + (rateValue * 0.01) / comTimeValue) ** (comTimeValue * termValue);
 
-  comTotalPayableOutput.textContent = comTotalValue.toLocaleString();
+  comTotalPayableOutput.textContent = comTotalValue.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+  });
   console.log(`This is ${comTimeValue}`);
 
   comInterestPayableOutput.textContent = (
     comTotalValue - principalvalue
-  ).toLocaleString();
+  ).toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+  });
 
   // Loop for each months
   // console.clear();
@@ -250,12 +254,10 @@ comTime.addEventListener("click", (e) => {
   // calculateEMI();
 });
 
-for (let i = 0; i < 3; i++) {
-  comTime[i].addEventListener("click", (e) => {
-    comTime.value = Number(e.target.value);
-    calculateEMI();
-  });
-}
+comTime.addEventListener("change", (e) => {
+  comTimeValue = Number(e.target.value);
+  calculateEMI();
+});
 
 // *************************************** For Tab Click
 
