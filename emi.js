@@ -98,20 +98,34 @@ const calculateEMI = () => {
 
   // Updating text content for EMI
 
-  emiPrincipalOutput.textContent = principalvalue.toLocaleString("en-US");
-  monthlyEMI.textContent = EMI.toLocaleString("en-US");
-  emiInterestPayableOutput.textContent =
-    interestPayable.toLocaleString("en-US");
+  emiPrincipalOutput.textContent = principalvalue.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+  });
+  monthlyEMI.textContent = EMI.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+  });
+  emiInterestPayableOutput.textContent = interestPayable.toLocaleString(
+    "en-US",
+    {
+      minimumFractionDigits: 2,
+    }
+  );
   emiTotalPayableOutput.textContent = totalPayable.toLocaleString();
 
   // Updating text content for Interest
-  siPrincipalOutput.textContent = principalvalue.toLocaleString("en-US");
+  siPrincipalOutput.textContent = principalvalue.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+  });
   let siIntPayable = 12 * interest * termValue;
-  siInterestPayableOutput.textContent = siIntPayable.toLocaleString("en-US");
+  siInterestPayableOutput.textContent = siIntPayable.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+  });
   siTotalPayableOutput.textContent = principalvalue + 12 * interest * termValue;
 
   // Updating text content for Compound Interest
-  comPrincipalOutput.textContent = principalvalue.toLocaleString("en-US");
+  comPrincipalOutput.textContent = principalvalue.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+  });
 
   let comTotalValue =
     principalvalue *
