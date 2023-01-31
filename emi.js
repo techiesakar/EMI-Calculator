@@ -110,7 +110,9 @@ const calculateEMI = () => {
       minimumFractionDigits: 2,
     }
   );
-  emiTotalPayableOutput.textContent = totalPayable.toLocaleString();
+  emiTotalPayableOutput.textContent = totalPayable.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+  });
 
   // Updating text content for Interest
   siPrincipalOutput.textContent = principalvalue.toLocaleString("en-US", {
