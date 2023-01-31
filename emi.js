@@ -99,33 +99,50 @@ const calculateEMI = () => {
   // Updating text content for EMI
 
   emiPrincipalOutput.textContent = principalvalue.toLocaleString("en-US", {
+    maximumFractionDigits: 2,
     minimumFractionDigits: 2,
   });
   monthlyEMI.textContent = EMI.toLocaleString("en-US", {
+    maximumFractionDigits: 2,
     minimumFractionDigits: 2,
   });
   emiInterestPayableOutput.textContent = interestPayable.toLocaleString(
     "en-US",
     {
+      maximumFractionDigits: 2,
       minimumFractionDigits: 2,
     }
   );
   emiTotalPayableOutput.textContent = totalPayable.toLocaleString("en-US", {
+    maximumFractionDigits: 2,
     minimumFractionDigits: 2,
   });
 
   // Updating text content for Interest
   siPrincipalOutput.textContent = principalvalue.toLocaleString("en-US", {
+    maximumFractionDigits: 2,
     minimumFractionDigits: 2,
   });
   let siIntPayable = 12 * interest * termValue;
   siInterestPayableOutput.textContent = siIntPayable.toLocaleString("en-US", {
+    maximumFractionDigits: 2,
     minimumFractionDigits: 2,
   });
-  siTotalPayableOutput.textContent = principalvalue + 12 * interest * termValue;
+  siTotalPayableOutput.textContent = (
+    principalvalue +
+    12 * interest * termValue
+  ).toLocaleString(
+    "en-US",
+
+    {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+    }
+  );
 
   // Updating text content for Compound Interest
   comPrincipalOutput.textContent = principalvalue.toLocaleString("en-US", {
+    maximumFractionDigits: 2,
     minimumFractionDigits: 2,
   });
 
@@ -134,6 +151,7 @@ const calculateEMI = () => {
     (1 + (rateValue * 0.01) / comTimeValue) ** (comTimeValue * termValue);
 
   comTotalPayableOutput.textContent = comTotalValue.toLocaleString("en-US", {
+    maximumFractionDigits: 2,
     minimumFractionDigits: 2,
   });
   console.log(`This is ${comTimeValue}`);
@@ -141,6 +159,7 @@ const calculateEMI = () => {
   comInterestPayableOutput.textContent = (
     comTotalValue - principalvalue
   ).toLocaleString("en-US", {
+    maximumFractionDigits: 2,
     minimumFractionDigits: 2,
   });
 
