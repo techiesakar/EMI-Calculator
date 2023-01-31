@@ -182,10 +182,10 @@ const calculateEMI = () => {
       Balance: principalvalue,
     };
     // Adding value to objects
-    statement[`${i}`].Installment = EMI.toFixed(2);
-    statement[`${i}`].Interest = interestPaidThisMonth.toFixed(2);
-    statement[`${i}`].Principal = principalPaidThisMonth.toFixed(2);
-    statement[`${i}`].Balance = i == termToMonth ? 0 : balance.toFixed(2);
+    statement[`${i}`].Installment = EMI;
+    statement[`${i}`].Interest = interestPaidThisMonth;
+    statement[`${i}`].Principal = principalPaidThisMonth;
+    statement[`${i}`].Balance = i == termToMonth ? 0 : balance;
 
     // Table Loop Ends
 
@@ -214,20 +214,38 @@ const calculateEMI = () => {
     monthTd.textContent = month;
     monthTd.classList.add("px-6", "py-4");
 
+    const InstallmentTd = document.createElement("td");
+    InstallmentTd.textContent = statement[month].Installment.toLocaleString(
+      "en-US",
+      {
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2,
+      }
+    );
+    InstallmentTd.classList.add("px-6", "py-4");
+
     const InterestTd = document.createElement("td");
-    InterestTd.textContent = statement[month].Interest;
+    InterestTd.textContent = statement[month].Interest.toLocaleString("en-US", {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+    });
     InterestTd.classList.add("px-6", "py-4");
 
     const PrincipalTd = document.createElement("td");
-    PrincipalTd.textContent = statement[month].Principal;
+    PrincipalTd.textContent = statement[month].Principal.toLocaleString(
+      "en-US",
+      {
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2,
+      }
+    );
     PrincipalTd.classList.add("px-6", "py-4");
 
-    const InstallmentTd = document.createElement("td");
-    InstallmentTd.textContent = statement[month].Installment;
-    InstallmentTd.classList.add("px-6", "py-4");
-
     const BalanceTd = document.createElement("td");
-    BalanceTd.textContent = statement[month].Balance;
+    BalanceTd.textContent = statement[month].Balance.toLocaleString("en-US", {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+    });
     BalanceTd.classList.add("px-6", "py-4");
 
     tr.appendChild(monthTd);

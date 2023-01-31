@@ -1,281 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="style.css" />
-    <style>
-      * {
-        font-family: "Poppins", sans-serif;
-      }
 
-      .tablinks.active {
-        color: rgb(29 78 216);
-        background-color: rgb(243 244 246);
-      }
-    </style>
-    <script src="emi.js" defer></script>
-    <title>EMI Calculator</title>
-  </head>
-  <body>
-    <div class="container-fluid">
-      <div class="wrapper mt-[100px] mx-auto max-w-screen-xl">
-        <div class="w-full">
-          <h1
-              id="tools-title"
-              class="text-center text-3xl font-bold text-blue-500 py-3 rounded"
-            >
-              EMI Calculator
-           </h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    * {
+      --primary: rgb(230, 230, 230);
+      --secondary: cornflowerblue;
+      font-family: "Poppins", sans-serif;
+      scrollbar-width: thin;
+      scrollbar-color: var(--secondary) var(--primary);
+    }
+
+
+    /* Chrome, Edge, and Safari */
+    *::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    *::-webkit-scrollbar-track {
+      background: var(--primary);
+      border-radius: 5px;
+    }
+
+    *::-webkit-scrollbar-thumb {
+      background-color: var(--secondary);
+      border-radius: 14px;
+      border: 3px solid var(--primary);
+    }
+
+    .tablinks.active {
+      color: rgb(29 78 216);
+      background-color: rgb(243 244 246);
+    }
+  </style>
+  <script src="emi.js" defer></script>
+  <title>EMI Calculator</title>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="wrapper mt-[100px] mx-auto max-w-screen-xl">
+      <div class="w-full">
+        <h1 id="tools-title" class="text-center text-3xl font-bold text-blue-500 py-3 mb-2 rounded">
+          EMI Calculator
+        </h1>
+      </div>
+      <div class="tab-buttons px-12">
+        <button type="button" onclick="openContent(event, 'emiContent')"
+          class="tablinks active py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+          EMI
+        </button>
+
+        <button type="button" onclick="openContent(event, 'interestContent')"
+          class="tablinks py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+          Interest
+        </button>
+        <button type="button" onclick="openContent(event, 'compoundContent')"
+          class="tablinks py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+          Compound
+        </button>
+      </div>
+      <div class="emi-container gap-4 h-full flex justify-between flex-wrap">
+        <form class="p-12 rounded shadow-lg border w-full lg:w-[60%]">
+          <div class="loan-amt mb-3">
+            <div>Loan Amount</div>
+            <div>
+              <input class="w-full slider" id="loanAmtSlider" type="range" name="" min="1" max="50000000" step="1" />
+            </div>
+            <div>
+              <input id="loan-input" placeholder="4,000,000" class="w-full p-2 border border-gray-200" type="text"
+                value="4000000" />
+            </div>
           </div>
-          <div class="tab-buttons">
-            <button
-              type="button"
-              onclick="openContent(event, 'emiContent')"
-              class="tablinks active py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-blue-600 hover:text-white focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-            >
-              EMI
-            </button>
-
-            <button
-              type="button"
-              onclick="openContent(event, 'interestContent')"
-              class="tablinks py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-            >
-              Interest
-            </button>
-            <button
-              type="button"
-              onclick="openContent(event, 'compoundContent')"
-              class="tablinks py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-            >
-              Compound
-            </button>
+          <div class="loan-int mb-3">
+            <div>Interest Rate</div>
+            <div>
+              <input id="interestRateSlider" class="w-full slider" type="range" name="" min="1" max="20" step="0.1" />
+            </div>
+            <div>
+              <input id="rate-input" placeholder="16.68" class="w-full p-2 border border-gray-200" type="text"
+                value="16.68" />
+            </div>
           </div>
-          <div
-            class="emi-container gap-4 h-full flex justify-between flex-wrap"
-          >
-            <form class="p-12 rounded shadow-lg border w-full lg:w-[60%]">
-              <div class="loan-amt">
-                <div>Loan Amount</div>
-                <div>
-                  <input
-                    class="w-full slider"
-                    id="loanAmtSlider"
-                    type="range"
-                    name=""
-                    min="1"
-                    max="50000000"
-                    step="1"
-                  />
-                </div>
-                <div>
-                  <input
-                    id="loan-input"
-                    placeholder="4,000,000"
-                    class="w-full p-2 border border-gray-200"
-                    type="text"
-                    value=""
-                  />
-                </div>
-              </div>
-              <div class="loan-int">
-                <div>Interest Rate</div>
-                <div>
-                  <input
-                    id="interestRateSlider"
-                    class="w-full slider"
-                    type="range"
-                    name=""
-                    min="1"
-                    max="20"
-                    step="0.1"
-                  />
-                </div>
-                <div>
-                  <input
-                    id="rate-input"
-                    placeholder="16.68"
-                    class="w-full p-2 border border-gray-200"
-                    type="text"
-                    value=""
-                  />
-                </div>
-              </div>
-              <div class="loan-term">
-                <div>Loan Tenure</div>
-                <div>
-                  <input
-                    id="loanTermSlider"
-                    class="w-full slider"
-                    type="range"
-                    name=""
-                    id=""
-                    min="1"
-                    max="20"
-                  />
-                </div>
-                <div>
-                  <input
-                    id="term-input"
-                    placeholder="14"
-                    class="w-full p-2 border border-gray-200"
-                    type="text"
-                    value=""
-                  />
-                </div>
-              </div>
-            </form>
-            <!-- #form -->
-            <div
-              id="emiContent"
-              class="tabcontent p-8 bg-white shadow-lg border w-full lg:w-[38%] leading-[50px]"
-            >
-              <div class="border-b border-gray-200">
-                <div>Monthly EMI</div>
-                <span class="text-3xl font-bold text-blue-500">Rs.</span>
-                <span
-                  id="monthlyEMI"
-                  class="text-2xl font-bold text-blue-500"
-                ></span>
-              </div>
-
-              <div class="flex justify-between border-b">
-                <div>Principal:</div>
-                <div>
-                  <span>Rs. </span>
-                  <span
-                    id="emi-principal-output"
-                    class="font-bold text-blue-500"
-                  ></span>
-                </div>
-              </div>
-              <div class="flex justify-between border-b">
-                <div>Interest Payable:</div>
-                <div>
-                  <span>Rs. </span> <span id="emi-total-interest-output"></span>
-                </div>
-              </div>
-              <div class="flex justify-between">
-                <div class="font-bold">Total Payable:</div>
-                <div>
-                  <span>Rs. </span>
-                  <span id="emi-total-payable-output"></span>
-                </div>
-              </div>
+          <div class="loan-term mb-3">
+            <div>Loan Tenure (Annum)</div>
+            <div>
+              <input id="loanTermSlider" class="w-full slider" type="range" name="" id="" min="1" max="20" />
             </div>
-            <!-- #EMIContent -->
-            <div
-              id="interestContent"
-              class="tabcontent hidden p-8 bg-white shadow-lg border w-full lg:w-[38%] leading-[50px]"
-            >
-              <div class="flex justify-between border-b">
-                <div>Principal:</div>
-                <div>
-                  <span>Rs. </span>
-                  <span
-                    id="si-principal-output"
-                    class="font-bold text-blue-500"
-                  ></span>
-                </div>
-              </div>
-              <div class="flex justify-between border-b">
-                <div>Interest Payable:</div>
-                <div>
-                  <span>Rs. </span> <span id="si-total-interest-output"></span>
-                </div>
-              </div>
-              <div class="flex justify-between">
-                <div class="font-bold">Total Payable:</div>
-                <div>
-                  <span>Rs. </span>
-                  <span id="si-total-payable-output"></span>
-                </div>
-              </div>
+            <div>
+              <input id="term-input" placeholder="14" class="w-full p-2 border border-gray-200" type="text"
+                value="14" />
             </div>
-            <!-- #interestContent -->
-            <div
-              id="compoundContent"
-              class="tabcontent hidden p-8 bg-white shadow-lg border w-full lg:w-[38%] leading-[50px]"
-            >
-              <div class="flex justify-between border-b items-center">
-                <div>Compound Time:</div>
+          </div>
+        </form>
+        <!-- #form -->
+        <div id="emiContent" class="tabcontent p-8 bg-white shadow-lg border w-full lg:w-[38%] leading-[50px]">
+          <div class="border-b border-gray-200">
+            <div>Monthly EMI</div>
+            <span class="text-3xl font-bold text-blue-500">Rs.</span>
+            <span id="monthlyEMI" class="text-2xl font-bold text-blue-500"></span>
+          </div>
 
-                <select
-                  id="com-time"
-                  class="h-[40px] form-select appearance-none block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  aria-label="Default select example"
-                >
-                  <option selected value="1">Yearly</option>
-                  <option value="2">Semi Annualy</option>
-                  <option value="4">Quaterly</option>
-                  <option value="12">Monthly</option>
-                </select>
-              </div>
-
-              <div class="flex justify-between border-b">
-                <div>Principal:</div>
-                <div>
-                  <span>Rs. </span>
-                  <span
-                    id="com-principal-output"
-                    class="font-bold text-blue-500"
-                  ></span>
-                </div>
-              </div>
-              <div class="flex justify-between border-b">
-                <div>Interest Payable:</div>
-                <div>
-                  <span>Rs. </span> <span id="com-total-interest-output"></span>
-                </div>
-              </div>
-              <div class="flex justify-between">
-                <div class="font-bold">Total Payable:</div>
-                <div>
-                  <span>Rs. </span>
-                  <span id="com-total-payable-output"></span>
-                </div>
-              </div>
+          <div class="flex justify-between border-b">
+            <div>Principal:</div>
+            <div>
+              <span>Rs. </span>
+              <span id="emi-principal-output" class="font-bold text-blue-500"></span>
             </div>
-            <!-- #compoundContent -->
+          </div>
+          <div class="flex justify-between border-b">
+            <div>Interest Payable:</div>
+            <div>
+              <span>Rs. </span> <span id="emi-total-interest-output"></span>
+            </div>
+          </div>
+          <div class="flex justify-between">
+            <div class="font-bold">Total Payable:</div>
+            <div>
+              <span>Rs. </span>
+              <span id="emi-total-payable-output"></span>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        id="tableWrapper"
-        class="table-wrapper mx-auto max-w-screen-xl mt-14"
-      >
-        <div
-          class="relative overflow-y-auto w-full shadow-md sm:rounded-lg overflow-y-auto h-96"
-        >
-          <table
-            id="table-schedule"
-            class="w-full relative text-sm text-left text-gray-500 dark:text-gray-400"
-          >
-            <thead
-              class="text-xs sticky top-0 w-full text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-            >
-              <tr>
-                <th scope="col" class="px-6 py-3">SN</th>
-                <th scope="col" class="px-6 py-3">EMI</th>
-                <th scope="col" class="px-6 py-3">Total Interest</th>
-                <th scope="col" class="px-6 py-3">Principal</th>
-                <th scope="col" class="px-6 py-3">Balance</th>
-              </tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-          </table>
+        <!-- #EMIContent -->
+        <div id="interestContent"
+          class="tabcontent hidden p-8 bg-white shadow-lg border w-full lg:w-[38%] leading-[50px]">
+          <div class="flex justify-between border-b">
+            <div>Principal:</div>
+            <div>
+              <span>Rs. </span>
+              <span id="si-principal-output" class="font-bold text-blue-500"></span>
+            </div>
+          </div>
+          <div class="flex justify-between border-b">
+            <div>Interest Payable:</div>
+            <div>
+              <span>Rs. </span> <span id="si-total-interest-output"></span>
+            </div>
+          </div>
+          <div class="flex justify-between">
+            <div class="font-bold">Total Payable:</div>
+            <div>
+              <span>Rs. </span>
+              <span id="si-total-payable-output"></span>
+            </div>
+          </div>
         </div>
+        <!-- #interestContent -->
+        <div id="compoundContent"
+          class="tabcontent hidden p-8 bg-white shadow-lg border w-full lg:w-[38%] leading-[50px]">
+          <div class="flex justify-between border-b items-center">
+            <div>Compound Time:</div>
+
+            <select id="com-time"
+              class="h-[40px] form-select appearance-none block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+              aria-label="Default select example">
+              <option selected value="1">Yearly</option>
+              <option value="2">Semi Annualy</option>
+              <option value="4">Quaterly</option>
+              <option value="12">Monthly</option>
+            </select>
+          </div>
+
+          <div class="flex justify-between border-b">
+            <div>Principal:</div>
+            <div>
+              <span>Rs. </span>
+              <span id="com-principal-output" class="font-bold text-blue-500"></span>
+            </div>
+          </div>
+          <div class="flex justify-between border-b">
+            <div>Interest Payable:</div>
+            <div>
+              <span>Rs. </span> <span id="com-total-interest-output"></span>
+            </div>
+          </div>
+          <div class="flex justify-between">
+            <div class="font-bold">Total Payable:</div>
+            <div>
+              <span>Rs. </span>
+              <span id="com-total-payable-output"></span>
+            </div>
+          </div>
+        </div>
+        <!-- #compoundContent -->
       </div>
-      <!-- .table-wrapper -->
     </div>
-  </body>
+  </div>
+  <div id="tableWrapper" class="table-wrapper mx-auto max-w-screen-xl mt-14">
+    <div class="relative overflow-y-auto w-full shadow-md sm:rounded-lg overflow-y-auto h-96">
+      <table id="table-schedule" class="w-full relative text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead
+          class="text-xs sticky top-0 w-full text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">SN</th>
+            <th scope="col" class="px-6 py-3">EMI</th>
+            <th scope="col" class="px-6 py-3">Total Interest</th>
+            <th scope="col" class="px-6 py-3">Principal</th>
+            <th scope="col" class="px-6 py-3">Balance</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </div>
+  <!-- .table-wrapper -->
+  </div>
+</body>
+
 </html>
